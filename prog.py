@@ -1,6 +1,10 @@
 print("Cybersteed not online, in terminal!")
 
-player_horse = {}
+player_horse = {
+    "name": "",
+    "speed": 0,
+    "agility": 0
+}
 
 def input_int(prompt):
     while True:
