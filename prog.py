@@ -7,8 +7,20 @@ player_horse = {
     "agility": 0
 }
 
+# Läser input med meddelandet prompt, försöker omvandla till int.
+def input_int(prompt) -> int:
+    """
+    Prompts the user to enter an integer value, repeatedly asking until a valid integer is provided.
 
-def input_int(prompt):
+    Args:
+        prompt (str): The message displayed to the user when requesting input.
+
+    Returns:
+        int: The integer value entered by the user.
+
+    Raises:
+        None: The function handles invalid input internally and does not raise exceptions.
+    """
     while True:
         try:
             return int(input(prompt))
@@ -18,15 +30,19 @@ def input_int(prompt):
 
 player_horse["name"] = input("Vad ska din häst heta: ")
 print("Din häst har speed och agility, max 6 i en stat, max 8 totalt.")
-stats_ok = False
-while stats_ok == False:
-    while player_horse["speed"] < 1 or player_horse["speed"] > 6:
-        player_horse["speed"] = input_int("Hur snabb är din häst(1-6): ")
-    while player_horse["agility"] < 1 or player_horse["agility"] > 6:
-        player_horse["agility"] = input_int("Hur smidig är din häst(1-6): ")
+
+# metod för att mata in ett värde mellan 1 och 6, samt ett namn ruför den
+def input_clamp(stat_name, prompt, clamp = 6):
+    while player_horse[stat_name] < 1 or player_horse[stat_name] > clamp:
+        player_horse[stat_name] = input_int(prompt)
+
+STATS_OK = False
+while STATS_OK is False:
+    input_clamp("speed", "Hur snabb är din häst(1-6): ")
+    input_clamp("agility", "Hur smidig är din häst(1-6): ")
 
     if player_horse["speed"] + player_horse["agility"] == 8:
-        stats_ok = True
+        STATS_OK = True
     else:
         print("Ogiltiga stats. Försök igen.")
         player_horse["speed"] = 0
